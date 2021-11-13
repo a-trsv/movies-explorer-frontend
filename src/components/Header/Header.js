@@ -4,6 +4,7 @@ import React from 'react'
 import { Link, useLocation } from 'react-router-dom';
 import HamburgerMenu from '../HamburgerMenu/HamburgerMenu';
 import {hamburgerMenuItems} from '../../utils/constants'
+import Navigation from '../Navigation/Navigation';
 
 function Header() {
 
@@ -18,6 +19,7 @@ function Header() {
     return (
         <header className="header">
             <Link to='/'><img className="header__logo" src={headerLogo} alt="Логотип проекта Movies" /></Link>
+            {pathname === '/' ? '' :  <Navigation />}
             {pathname === '/' ? (
                 <nav className="header__nav">
 

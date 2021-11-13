@@ -1,5 +1,4 @@
 .navigation {
-
 }
 
 .navigation__list {
@@ -31,4 +30,10 @@
 .navigation__link_movies {
     margin-right: 16px;
     font-weight: 500;
+}
+
+@media screen and (max-width: 768px) {
+    .navigation {
+        display: none;
+    }
 }
