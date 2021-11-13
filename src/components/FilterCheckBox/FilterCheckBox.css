@@ -1,0 +1,92 @@
+.filter-checkbox {
+  margin: 0;
+  margin-top: 27px;
+  display: flex;
+  align-self: start;
+  padding-bottom: 44px;
+  border-bottom: 1px solid rgba(170, 170, 170, 0.2)
+}
+
+/* https://bit.ly/30088t0 */
+
+/* The switch - the box around the slider */
+
+.filter-checkbox__switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+}
+
+/* Hide default HTML checkbox */
+
+.filter-checkbox__switch .filter_checkbox__input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+
+.filer-checkbox__slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+
+.filer-checkbox__slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 10%;
+  bottom: 10%;
+  background-color: white;
+  transition: .4s;
+}
+
+.filter_checkbox__input:checked+.filer-checkbox__slider {
+  background-color: #2BE080;
+}
+
+.filter_checkbox__input:checked+.filer-checkbox__slider:before {
+  transform: translateX(80%);
+}
+
+/* Rounded sliders */
+
+.filer-checkbox__slider.filter-checkbox__round {
+  border-radius: 34px;
+}
+
+.filer-checkbox__slider.filter-checkbox__round:before {
+  border-radius: 50%;
+}
+
+.filter-checkbox__span {
+  margin: 0;
+  margin-left: 14px;
+  font-family: 'Inter', Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  color: #000;
+}
+
+@media screen and (max-width: 320px) {
+  .filter-checkbox {
+    margin-top: 31px;
+    padding-bottom: 64px;
+    margin-bottom: 10px;
+  }
+  .filter-checkbox__span {
+    margin-left: 13px;
+    font-size: 11px;
+  }
+}

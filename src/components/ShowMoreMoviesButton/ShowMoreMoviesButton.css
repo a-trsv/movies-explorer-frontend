@@ -1,0 +1,36 @@
+.show-more-movies {
+    margin: 0;
+    padding: 0;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    height: 166px;
+} 
+
+.show-more-movies__button {
+    max-width: 320px;
+    width: 100%;
+    max-width: 320px;
+    height: 36px;
+    background: none;
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #000;
+    border: 1px solid rgba(160, 160, 160, 0.1);
+    border-radius: 5px;
+}
+
+.show-more-movies__button:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 640px) {
+    .show-more-movies__button {
+        max-width: 240px;
+    }
+}

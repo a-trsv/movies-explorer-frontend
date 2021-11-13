@@ -1,0 +1,116 @@
+.profile {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile__title {
+    margin-top: 74px;
+    padding: 0;
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    color: #000;
+}
+
+.profile__info {
+    display: flex;
+    flex-direction: column;
+    margin-top: 124px;
+    max-width: 410px;
+}
+
+.profile__zone {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 16px;
+    margin-bottom: 17px;
+    border-bottom: 1px solid rgb(232, 232, 232);
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    color: #000;
+}
+
+.profile__zone:last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.profile__name {
+    margin-right: 148px;
+    padding: 0;
+}
+
+.profile__email {
+    margin-right: 148px;
+    padding: 0;
+}
+
+.profile__edit-zone {
+    margin-top: 220px;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.profile__button {
+    border: none;
+    background: none;
+    margin-bottom: 16px;
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: #000;
+}
+
+.profile__button_signout {
+    margin-bottom: 0;
+    font-weight: 500;
+    color: #ee3465;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 768px) {
+    .profile {
+        padding-bottom: 270px;
+    }
+    .profile__title {
+        margin-top: 236px;
+    }
+    .profile__info {
+        margin-top: 96px;
+    }
+    .profile__edit-zone {
+        margin-top: 210px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .profile {
+        padding-bottom: 40px;
+    }
+    .profile__title {
+        margin-top: 70px;
+    }
+    .profile__info {
+        margin-top: 80px;
+    }
+    .profile__button {
+        font-size: 12px;
+        line-height: 15px;
+    }
+}

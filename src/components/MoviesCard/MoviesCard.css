@@ -1,0 +1,104 @@
+/* 
+import savedMovieImage from '../../images/benksi-not-saved.png';
+import unSavedMovieImage from '../../images/benksi-saved.png';
+import SaveIcon from '../../images/saved-movie-icon.svg';
+import deleteIcon from '../../images/delete-movie.svg';
+*/
+
+.movies-card {
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.movies-card__description {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 18px 18px 18px 18px;
+    padding: 0;
+}
+
+.movies-card__movie-title {
+    margin: 0;
+    padding: 0;
+    margin-right: 14px;
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000;
+}
+
+.movies-card__movie-duration {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+    color: #a0a0a0;
+}
+
+.movies-card__movie-img {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    object-fit: cover;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.movies-card__icon {
+    margin: 0;
+    padding: 0;
+    width: 100px;
+    height: 29px;
+    margin: 18px auto 18px auto;
+    border: none;
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 11px;
+    color: #000;
+}
+
+.movies-card__icon:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.movies-card__icon_saved {
+    background: #ee3465;
+    border-radius: 30px;
+}
+
+@media screen and (max-width: 768px) {
+    .movies-card__movie-title {
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .movies-card__icon {
+        margin: 14px auto 14px auto;
+    }
+    .movies-card__movie-title {
+        font-size: 12px;
+    }
+    .movies-card__movie-duration {
+        font-size: 10px;
+    }
+    .movies-card__movie-img {
+        filter: none;
+    }
+}
