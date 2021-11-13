@@ -27,7 +27,7 @@ function AboutMe() {
                     </a>
                         <a
                             className="about-me__link"
-                            href="https://GitHub.com"
+                            href="https://GitHub.com/a-trsv"
                             rel="noreferrer"
                             target="_blank"
                         >

@@ -32,5 +32,6 @@
 @media screen and (max-width: 640px) {
     .show-more-movies__button {
         max-width: 240px;
+        max-height: 140px;
     }
 }

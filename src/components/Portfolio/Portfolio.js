@@ -38,7 +38,7 @@ function Portfolio() {
                 <li className="portfolio__project">
                     <a
                         className="portfolio__link"
-                        href="https://github.com/a-trsv/mesto-react-auth"
+                        href="https://github.com/a-trsv/react-mesto-auth"
                         rel="noreferrer"
                         target="_blank"
                     >
