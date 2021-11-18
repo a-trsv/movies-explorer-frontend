@@ -1,0 +1,39 @@
+.navigation {
+}
+
+.navigation__list {
+    display: flex;
+    margin: 28px auto 28px auto;
+    padding: 0;
+    list-style: none;
+}
+
+.navigation__list-items {
+    margin: 0;
+}
+
+.navigation__list-items:last-child {
+    margin-right: 0;
+}
+
+.navigation__link {
+    margin: 0;
+    text-decoration: 0;
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+    color: #000;
+}
+
+.navigation__link_movies {
+    margin-right: 16px;
+    font-weight: 500;
+}
+
+@media screen and (max-width: 768px) {
+    .navigation {
+        display: none;
+    }
+}

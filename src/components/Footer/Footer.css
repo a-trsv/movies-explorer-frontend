@@ -1,0 +1,124 @@
+.footer {
+    padding: 0;
+    margin: 0 70px 0 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer__title {
+    width: 100%;
+    margin: 0;
+    margin-top: 79px;
+    padding: 0;
+    padding-bottom: 20px;
+    border-bottom: solid 1px rgb(232, 232, 232);
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: #a0a0a0;
+    text-align: center;
+}
+
+.footer__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 20px auto 20px auto;
+    width: 100%;
+}
+
+.footer__copyright {
+    margin: 0;
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: #a0a0a0;
+}
+
+.footer__nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0;
+    list-style: none;
+}
+
+.footer__nav-item {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: #a0a0a0;
+    margin-right: 20px;
+}
+
+.footer__nav-item:last-child {
+    margin-right: 0;
+}
+
+.footer__link {
+    text-decoration: none;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+    color: #000;
+}
+
+.footer__link:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .footer {
+        margin: auto 30px auto 30px;
+    }
+}
+
+@media screen and (max-width: 730px) {
+    .footer {
+        margin: auto 10px 10px 10px;
+    }
+    .footer__title {
+        font-weight: 400;
+        font-size: 12px;
+    }
+    .footer__container {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+        margin: 30px auto 0 auto;
+        width: 100%;
+    }
+    .footer__copyright {
+        margin-top: 30px;
+        font-size: 12px;
+        line-height: 15px;
+    }
+    .footer__nav {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding:0;
+        list-style: none;
+    }
+    .footer__nav-item {
+        font-size: 12px;
+        line-height: 15px;
+        margin: 0;
+        margin-bottom: 12px;
+    }
+    .footer__nav-item-:last-child {
+        margin-bottom: 0;
+    }
+}

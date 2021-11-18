@@ -1,0 +1,128 @@
+.header {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    margin: auto 70px auto 70px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header__logo {
+    width: 38px;
+    height: 38px;
+    margin: 18px auto 18px 0;
+}
+
+.header__logo:hover {
+    opacity: 0.6;
+}
+
+.header__nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0;
+}
+
+.header__register {
+    text-decoration: none;
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    color: #000;
+}
+
+.header__profile-link {
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.header__register:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.header__button-login {
+    background-color: #2be080;
+    border-radius: 3px;
+    width: 76px;
+    height: 32px;
+    margin: 0 0 0 10px;
+    outline: none;
+    border: none;
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    color: #000;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header__button-login:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.header__hamburger-btn {
+    width: 28px;
+    height: 26px;
+    position: relative;
+    cursor: pointer;
+    display: none;
+}
+
+.header__hamburger-btn_active {
+    display: block;
+}
+
+.header__hamburger-btn:before {
+    content: '';
+    position: absolute;
+    width: 28px;
+    top: 0;
+    background-color: #000;
+    height: 3px;
+}
+
+.header__hamburger-btn .header__hamburger-span {
+    position: absolute;
+    width: 28px;
+    top: 8px;
+    background-color: #000;
+    height: 3px;
+}
+
+.header__hamburger-btn:after {
+    content: '';
+    position: absolute;
+    width: 28px;
+    top: 17px;
+    background-color: #000;
+    height: 3px;
+}
+
+@media screen and (max-width: 768px) {
+    .header {
+        margin: auto 30px auto 30px;
+    }
+    .header__nav_hamburger {
+        display: none;
+    }
+    .header__hamburger-btn {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .header{
+        margin: 18px 14px 18px 14px;
+    }
+}
