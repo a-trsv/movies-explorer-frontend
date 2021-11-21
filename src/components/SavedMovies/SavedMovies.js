@@ -8,10 +8,15 @@ import ShowMoreMoviesButton from '../ShowMoreMoviesButton/ShowMoreMoviesButton';
 import './SavedMovies.css';
 
 import { MOVIES } from '../../utils/constants'
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+import { withRouter } from 'react-router-dom'
 
 
 
-function SaviedMovies() {
+function SaviedMovies({
+    loggedIn
+}) {
     let location = useLocation();
 
     const savedMoviesArray = MOVIES.filter(function(e) {
@@ -20,14 +25,16 @@ function SaviedMovies() {
 
     return (
         <>
+            <Header loggedIn={loggedIn} />
             <SearchForm />
             <MoviesCardList
                 cardData={savedMoviesArray}
                 pageLocation={location.pathname}
             />
             <ShowMoreMoviesButton />
+            <Footer />
         </>
     )
 }
 
-export default SaviedMovies;
+export default withRouter(SaviedMovies);

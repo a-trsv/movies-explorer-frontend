@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import './App.css'
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -11,62 +11,157 @@ import Profile from '../Profile/Profile';
 import AuthHeader from '../AuthHeader/AuthHeader';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
+import { CurrentUserContext } from '../../components/CurrentUserContext/CurrentUserContext';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import mainApi from '../../utils/MainApi';
+import moviesApi from '../../utils/MoviesApi';
 
 
 function App() {
 
-  // const [loggedIn, setLoggedIn] = React.useState(false);
+  const history = useHistory()
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [currentUser, setCurrentUser] = React.useState([]);
+  const [profileEditErrorStatus, setProfileEditErrorStatus] = React.useState(null)
+  const [regErrorStatus, setRegErrorStatus] = React.useState(null)
+  const [loginErrorStatus, setLoginErrorStatus] = React.useState(null)
+  const [tokenErrorStatus, setTokenErrorStatus] = React.useState(null)
+
+
+  React.useEffect(() => {
+    const token = localStorage.getItem('jwt')
+    if (token) {
+      mainApi.checkToken(token)
+        .then((res) => {
+          setLoggedIn(true)
+          setCurrentUser({ name: res.name, email: res.email, _id: res._id })
+          
+          history.push('/movies')
+        })
+        .catch((err) => {
+          console.log(err)
+          setTokenErrorStatus(err)
+        })
+
+    }
+  }, [history])
+
+  function handleLogin({ email, password }) {
+    return mainApi.authorization(email, password)
+      .then((res) => {
+        if (res.token) {
+          console.log(res.token)
+          localStorage.setItem('jwt', res.token)
+          mainApi.checkToken(res.token)
+          setLoggedIn(true)
+        }
+        history.push('/movies')
+      })
+      .catch((err) => {
+        console.log(err)
+        setLoginErrorStatus(err)
+      })
+  }
+
+  function handleRegister(data) {
+    const { name, email, password } = data;
+    return mainApi.register(name, email, password)
+      .then((res) => {
+        // console.log('yspex!')
+        handleLogin({ email, password })
+        setCurrentUser(res)
+        history.push('/movies')
+      })
+      .catch((err) => {
+        console.log(err)
+        setRegErrorStatus(err)
+      })
+  }
+
+  function handleSignOut() {
+    setLoggedIn(false)
+    localStorage.removeItem('jwt')
+    localStorage.removeItem('moviesContent')
+    history.push('/')
+  }
+
+  function handleUpdateProfile(data) {
+    const token = localStorage.getItem('jwt')
+    mainApi.updateProfile(data, token)
+      .then((res) => {
+        setCurrentUser(res)
+      })
+      .catch((err) => {
+        console.log(err)
+        setProfileEditErrorStatus(err)
+      })
+  }
 
   return (
-    <div className="app">
-      <Switch>
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="app">
+        <Switch>
 
-        <Route exact path='/'>
-          <Header />
-          <Main />
-          <Footer />
-        </Route>
+          <Route exact path='/'>
+            <Header
+              loggedIn={loggedIn}
+            />
+            <Main />
+            <Footer />
+          </Route>
 
-        <Route exact path='/movies'>
-          <Header />
+          <ProtectedRoute
+            path='/movies'
+            loggedIn={loggedIn}
+            redirectAddress='/'
+            component={Movies}
+          // onLoadMoviesList={handleGetMoviesContent}
+          // cards={moviesContent}
+          />
 
-          <Movies />
-          <Footer />
-        </Route>
+          <ProtectedRoute
+            path='/saved-movies'
+            loggedIn={loggedIn}
+            redirectAddress='/'
+            component={SaviedMovies}
+          />
 
-        <Route exact path='/saved-movies'>
-          <Header />
-          <SaviedMovies />
-          <Footer />
-        </Route>
+          <ProtectedRoute
+            path='/profile'
+            loggedIn={loggedIn}
+            onSignOut={handleSignOut}
+            onUpdateProfile={handleUpdateProfile}
+            profileEditErrorStatus={profileEditErrorStatus}
+            redirectAddress='/'
+            component={Profile}
+          />
 
-        <Route exact path='/profile'>
-          <Header />
+          <Route exact path='/signup'>
+            <AuthHeader />
+            <Register
+              loggedIn={loggedIn}
+              onRegister={handleRegister}
+              regErrorStatus={regErrorStatus}
+            />
+          </Route>
 
-          <Profile />
-        </Route>
+          <Route exact path='/signin'>
+            <AuthHeader />
+            <Login
+              loggedIn={loggedIn}
+              onLogin={handleLogin}
+              loginErrorStatus={loginErrorStatus}
+              tokenErrorStatus={tokenErrorStatus}
+            />
+          </Route>
 
-        <Route exact path='/profile'>
-          <Header />
-          <Profile />
-        </Route>
+          <Route path="*">
+            <NotFoundError />
+          </Route>
 
-        <Route exact path='/signup'>
-          <AuthHeader />
-          <Register />
-        </Route>
-
-        <Route exact path='/signin'>
-          <AuthHeader />
-          <Login />
-        </Route>
-
-        <Route path="*">
-          <NotFoundError />
-        </Route>
-
-      </Switch>
-    </div>
+        </Switch>
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 

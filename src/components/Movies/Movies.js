@@ -9,14 +9,20 @@ import ShowMoreMoviesButton from '../ShowMoreMoviesButton/ShowMoreMoviesButton';
 import './Movies.css';
 
 import { MOVIES } from '../../utils/constants'
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+import { withRouter } from 'react-router-dom'
 
 
 
-function Movies() {
+function Movies({
+    loggedIn
+}) {
     let location = useLocation();
 
     return (
         <>
+            <Header loggedIn={loggedIn} />
             <SearchForm />
             {/* <Preloader /> */}
             <MoviesCardList
@@ -24,8 +30,9 @@ function Movies() {
                 pageLocation={location.pathname}
             />
             <ShowMoreMoviesButton />
+            <Footer />
         </>
     )
 }
 
-export default Movies;
+export default withRouter(Movies);
