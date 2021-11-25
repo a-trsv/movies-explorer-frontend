@@ -28,13 +28,6 @@ class MainApi {
             body: JSON.stringify({ email, password })
         })
             .then(res => this._checkServerResponse(res))
-        // .then((data) => {
-        //     if (data.token) {
-        //         localStorage.setItem('jwt', data.token)
-        //         api.updateToken()
-        //         return data.token
-        //     }
-        // })
     }
 
     checkToken(token) {
@@ -47,10 +40,10 @@ class MainApi {
             },
         })
             .then(res => this._checkServerResponse(res))
-        // .then((data) => data)
     }
 
-    getUserProfile(token) {
+    getUserData() {
+        const token = localStorage.getItem('jwt')
         return fetch(`${this._address}/users/me`, {
             method: 'GET',
             headers: {
@@ -59,7 +52,66 @@ class MainApi {
             },
         })
             .then(res => this._checkServerResponse(res))
-        // .then((data) => data)
+        //
+        //  .then((data) => data)
+    }
+
+    getUserMovies() {
+        const token = localStorage.getItem('jwt')
+        return fetch(`${this._address}/movies`, {
+            method: 'GET',
+            headers: {
+                ...this._headers,
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then(res => this._checkServerResponse(res))
+        //
+        //  .then((data) => data)
+    }
+
+    // https://www.youtube.com/watch?v=dQw4w9WgXcQ
+
+    addFilm(movie) {
+        const token = localStorage.getItem('jwt')
+        return fetch(`${this._address}/movies`, {
+            method: 'POST',
+            headers: {
+                ...this._headers,
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                country: movie.country ? movie.country : 'null',
+                director: movie.director ? movie.director : 'null',
+                duration: movie.duration ? movie.duration : '0',
+                year: movie.year ? movie.year : '1900',
+                description: movie.description ? movie.description : 'null',
+                image: movie.image ? `https://api.nomoreparties.co${movie.image.url}` : 'null',
+                trailer: movie.trailerLink ? movie.trailerLink : 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                thumbnail: `https://api.nomoreparties.co${movie.image.formats.thumbnail ? movie.image.formats.thumbnail.url : ''}`,
+                movieId: movie.id,
+                nameRU: movie.nameRU ? movie.nameRU : 'null',
+                nameEN: movie.nameEN ? movie.nameEN : 'null',
+
+            })
+        })
+            .then(res => this._checkServerResponse(res))
+        //
+        //  .then((data) => data)
+    }
+
+    deleteFilm(movieId) {
+        const token = localStorage.getItem('jwt')
+        return fetch(`${this._address}/movies/${movieId}`, {
+            method: 'DELETE',
+            headers: {
+                ...this._headers,
+                Authorization: `Bearer ${token}`,
+            }
+        })
+            .then(res => this._checkServerResponse(res))
+        //
+        //  .then((data) => data)
     }
 
     updateProfile(data, token) {
@@ -81,11 +133,11 @@ class MainApi {
 }
 const mainApi = new MainApi({
     // address: 'https://api.a-trsv.nomoredomains.club',
-    // address: 'https://api-a-trsv-movies.nomoredomains.work',
-    address: 'http://localhost:3000',
+    address: 'https://api-a-trsv-movies.nomoredomains.work',
+    // address: 'http://localhost:3000',
     headers: {
         // 'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-        // 'Accept': 'application/json',
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
     }
 })

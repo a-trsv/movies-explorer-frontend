@@ -56,15 +56,15 @@
     font-size: 11px;
     line-height: 13px;
     color: #000;
-   text-align: right;
-   padding: 0;
-   border: none;
-   width:100%
+    text-align: right;
+    padding: 0;
+    border: none;
+    width: 100%
 }
 
 .profile__input:focus {
     outline: none;
-    border-bottom: 1px solid rgb(52,86,243);
+    border-bottom: 1px solid rgb(52, 86, 243);
 }
 
 .profile__input_error {
@@ -144,12 +144,15 @@
     .profile {
         padding-bottom: 270px;
     }
+
     .profile__title {
         margin-top: 236px;
     }
+
     .profile__info {
         margin-top: 96px;
     }
+
     .profile__edit-zone {
         margin-top: 210px;
     }
@@ -159,12 +162,15 @@
     .profile {
         padding-bottom: 40px;
     }
+
     .profile__title {
         margin-top: 70px;
     }
+
     .profile__info {
         margin-top: 80px;
     }
+
     .profile__button {
         font-size: 12px;
         line-height: 15px;

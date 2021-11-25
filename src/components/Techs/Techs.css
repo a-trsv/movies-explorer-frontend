@@ -96,20 +96,25 @@
     .techs {
         margin: 0 50px 0 50px;
     }
+
     .techs__subtitle {
         margin-top: 90px;
     }
+
     .techs__title {
         margin-top: 80px;
         margin-bottom: 22px;
     }
+
     .techs__paragraph {
         font-size: 12px;
         line-height: 18px;
     }
+
     .techs__items {
         margin: 83px 0 90px 0;
     }
+
     .techs__item {
         width: 84px;
         height: 57px;
@@ -123,28 +128,33 @@
     .techs {
         margin: 0 18px 0 18px;
     }
+
     .techs__subtitle {
         margin-top: 70px;
         padding-bottom: 28px;
         font-size: 18px;
         line-height: 22px;
     }
+
     .techs__title {
         margin-top: 60px;
         margin-bottom: 24px;
         font-size: 30px;
         line-height: 36px;
     }
+
     .techs__paragraph {
         font-size: 11px;
         line-height: 16px;
     }
+
     .techs__items {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 10px 10px;
         margin: 50px auto 70px auto;
     }
+
     .techs__item {
         margin: 0;
     }

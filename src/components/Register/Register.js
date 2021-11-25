@@ -45,6 +45,7 @@ function Register({ onRegister, loggedIn, regErrorStatus }) {
         evt.preventDefault();
         // console.log(values)
         onRegister(values)
+        setFormIsValid(false)
         setRegErrorText(null)
         resetForm()
     }
@@ -81,9 +82,11 @@ function Register({ onRegister, loggedIn, regErrorStatus }) {
                 type="text" id="inputName"
                 placeholder="Введите имя"
                 name='name'
-                value={values.name}
+                value={values.name || ''}
                 onChange={handleChange}
                 pattern="[A-Za-zА-Яа-яЁё -]+"
+                minLength="2"
+                maxLength="30"
                 required
             />
             <span className="form__error" id="inputName-error">{errors.name}</span>
@@ -99,7 +102,7 @@ function Register({ onRegister, loggedIn, regErrorStatus }) {
                 type="email" id="inputEmail"
                 placeholder="Введите E-Mail"
                 name='email'
-                value={values.email}
+                value={values.email || ''}
                 onChange={handleChange}
                 required
             />
@@ -116,8 +119,9 @@ function Register({ onRegister, loggedIn, regErrorStatus }) {
                 type="password" id="inputPassword"
                 name='password'
                 placeholder="Введите пароль"
-                value={values.password}
+                value={values.password || ''}
                 onChange={handleChange}
+                minLength="8"
                 required
             />
             <span className="form__error" id="inputEmail-error">{errors.password}</span>

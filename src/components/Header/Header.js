@@ -3,7 +3,7 @@ import headerLogo from '../../images/logo.svg';
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom';
 import HamburgerMenu from '../HamburgerMenu/HamburgerMenu';
-import { hamburgerMenuItems } from '../../utils/constants'
+import hamburgerMenuItems from '../../utils/constants'
 import Navigation from '../Navigation/Navigation';
 
 function Header({
@@ -13,7 +13,6 @@ function Header({
     const { pathname } = useLocation();
     const linkName = `${pathname === '/' ? 'Регистрация' : 'Аккаунт'}`
     const linkUrl = `${pathname === '/' ? '/signup' : '/profile'}`
-    // const hamburgerMenu = `${pathname === '' ? '' : 'header__hamburger-btn_active'}`
 
     const [menuActive, setMenuActive] = React.useState(false);
 

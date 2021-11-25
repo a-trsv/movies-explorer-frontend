@@ -9,9 +9,9 @@ function Login({ onLogin, loggedIn, loginErrorStatus, tokenErrorStatus }) {
 
     const history = useHistory()
     const [formIsValid, setFormIsValid] = React.useState(false)
-    const [loginErrorText ,setLoginErrorText] = React.useState(null)
+    const [loginErrorText, setLoginErrorText] = React.useState(null)
     const [errors, setErrors] = React.useState({})
-    
+
     const [values, setValues] = React.useState({
         email: '',
         password: '',
@@ -30,42 +30,44 @@ function Login({ onLogin, loggedIn, loginErrorStatus, tokenErrorStatus }) {
         setValues({ ...values, [name]: value })
         setErrors({ ...errors, [name]: target.validationMessage })
         setFormIsValid(target.closest('form').checkValidity())
-        }
-        const resetForm = useCallback(
-            (newValues = {}, newErrors = {}, newFormIsValid = false) => {
-                setValues(newValues);
-                setErrors(newErrors);
-                setFormIsValid(newFormIsValid)
-            },
-            [setValues, setErrors, setFormIsValid]
-        )
+
+    }
+    const resetForm = useCallback(
+        (newValues = {}, newErrors = {}, newFormIsValid = false) => {
+            setValues(newValues);
+            setErrors(newErrors);
+            setFormIsValid(newFormIsValid)
+        },
+        [setValues, setErrors, setFormIsValid]
+    )
 
 
     function handleSubmit(evt) {
         evt.preventDefault();
         // console.log(values)
         onLogin(values)
+        getErrorSpan()
         resetForm()
     }
 
-    React.useEffect(() => {
-        if (loginErrorStatus){
-        switch (loginErrorStatus) {
-            case '400':
-                setLoginErrorText(LOGIN_PAGE_ERRORS.WRONG_USER_INFO)
-                break;
-            case '500':
-                setLoginErrorText(ANOTHER_ERRORS.SERVER_ERROR)
-                break;
-            default:
-                break;
-        }
-    }
-        if (tokenErrorStatus) {
-            switch (tokenErrorStatus) {
+    function getErrorSpan() {
+        if (loginErrorStatus) {
+            switch (loginErrorStatus) {
+                case '400':
+                    setLoginErrorText(LOGIN_PAGE_ERRORS.WRONG_USER_INFO)
+                    break;
                 case '401':
                     setLoginErrorText(LOGIN_PAGE_ERRORS.WRONG_TOKEN_REQUEST)
                     break;
+                case '500':
+                    setLoginErrorText(ANOTHER_ERRORS.SERVER_ERROR)
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (tokenErrorStatus) {
+            switch (tokenErrorStatus) {
                 case '409':
                     setLoginErrorText(LOGIN_PAGE_ERRORS.WRONG_TOKEN_COMPARE)
                     break;
@@ -73,7 +75,7 @@ function Login({ onLogin, loggedIn, loginErrorStatus, tokenErrorStatus }) {
                     break;
             }
         }
-    }, [loginErrorStatus, tokenErrorStatus])
+    }
 
     return (
         <Form
@@ -92,7 +94,7 @@ function Login({ onLogin, loggedIn, loginErrorStatus, tokenErrorStatus }) {
                 type="email" id="inputEmail"
                 placeholder="Введите Ваш E-Mail"
                 name='email'
-                value={values.email}
+                value={values.email || ''}
                 onChange={handleChange}
                 required
             />
@@ -107,8 +109,9 @@ function Login({ onLogin, loggedIn, loginErrorStatus, tokenErrorStatus }) {
                 type="password" id="inputPassword"
                 name='password'
                 placeholder="Введите пароль"
-                value={values.password}
+                value={values.password || ''}
                 onChange={handleChange}
+                minLength="8"
                 required
             />
             <span className="form__error" id="inputPassword-error">{errors.password}</span>

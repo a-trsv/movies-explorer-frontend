@@ -1,5 +1,4 @@
-class MoviesApi
- {
+class MoviesApi {
     constructor(options) {
         this._address = options.address;
         this._headers = options.headers;
@@ -19,7 +18,6 @@ class MoviesApi
             headers: this._headers,
         })
             .then(res => this._checkServerResponse(res))
-        // .then((data) => data)
     }
 }
 

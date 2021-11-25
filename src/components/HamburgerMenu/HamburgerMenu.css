@@ -105,15 +105,19 @@
     .hamburger-menu {
         width: 100%;
     }
+
     .hamburger-menu__content {
         width: 100%
     }
+
     .hamburger-menu__blur {
         display: none;
     }
+
     .hamburger-menu__profile-link {
         margin-top: 444px;
     }
+
     .hamburger-menu__close-button {
         top: 14px;
         right: 14px;

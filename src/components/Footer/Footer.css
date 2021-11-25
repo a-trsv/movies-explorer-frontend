@@ -87,10 +87,12 @@
     .footer {
         margin: auto 10px 10px 10px;
     }
+
     .footer__title {
         font-weight: 400;
         font-size: 12px;
     }
+
     .footer__container {
         display: flex;
         flex-direction: column-reverse;
@@ -99,25 +101,29 @@
         margin: 30px auto 0 auto;
         width: 100%;
     }
+
     .footer__copyright {
         margin-top: 30px;
         font-size: 12px;
         line-height: 15px;
     }
+
     .footer__nav {
         flex-direction: column;
         justify-content: center;
         align-items: center;
         margin: 0;
-        padding:0;
+        padding: 0;
         list-style: none;
     }
+
     .footer__nav-item {
         font-size: 12px;
         line-height: 15px;
         margin: 0;
         margin-bottom: 12px;
     }
+
     .footer__nav-item-:last-child {
         margin-bottom: 0;
     }

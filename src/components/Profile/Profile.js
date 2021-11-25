@@ -1,14 +1,11 @@
 import React from 'react';
 import './Profile.css'
-// import {currentUser} from '../../utils/constants';
 import { Link } from 'react-router-dom';
 import Header from '../Header/Header';
 import { withRouter } from 'react-router-dom'
 import { CurrentUserContext } from '../../components/CurrentUserContext/CurrentUserContext'
 import { PROFILE_PAGE_ERRORS, ANOTHER_ERRORS } from '../../utils/errors';
 
-
-// После этапа 2 переписать на форму
 
 function Profile({
     loggedIn,
@@ -23,7 +20,7 @@ function Profile({
         name: '',
         email: '',
     })
-    const [formIsValid, setformIsValid] = React.useState(false)
+    const [formIsValid, setFormIsValid] = React.useState(false)
     const profileSaveButtonType = `${!formIsValid ? 'profile__button_edit' : 'profile__button_active'}`
     const profileSaveButtonText = `${!formIsValid ? 'Редактировать' : 'Сохранить'}`
     const profileSignOutButtonType = `${!formIsValid ? 'profile__exit-button_active' : 'profile__exit-button'}`
@@ -40,7 +37,7 @@ function Profile({
     function handleSubmit(evt) {
         evt.preventDefault();
         onUpdateProfile(values)
-        setformIsValid(false)
+        setFormIsValid(false)
         setProfileErrorText(null)
     }
 
@@ -49,7 +46,7 @@ function Profile({
         const name = target.name;
         const value = target.value;
         setValues({ ...values, [name]: value })
-        setformIsValid(target.closest('form').checkValidity())
+        setFormIsValid(target.closest('form').checkValidity())
     }
 
 
@@ -88,6 +85,8 @@ function Profile({
                             name='name'
                             value={values.name}
                             onChange={handleChange}
+                            minLength="2"
+                            maxLength="30"
                             required
                         />
                     </div>
@@ -109,9 +108,9 @@ function Profile({
                 </div>
                 <div className="profile__edit-zone">
                     <p className="profile__edit-error">{profileErrorText}</p>
-                    <button className={`profile__button ${profileSaveButtonType}`} form="profile-edit" type="submit">
+                    <button disabled={!formIsValid} className={`profile__button ${profileSaveButtonType}`} form="profile-edit" type="submit">
                         {profileSaveButtonText}
-                </button>
+                    </button>
                     <Link onClick={onSignOut} className={`profile__button ${profileSignOutButtonType}`} to="/">
                         Выйти из аккаунта
                 </Link>

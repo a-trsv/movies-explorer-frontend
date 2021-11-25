@@ -1,37 +1,61 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import ShowMoreMoviesButton from '../ShowMoreMoviesButton/ShowMoreMoviesButton';
-
+import Preloader from '../Preloader/Preloader';
 import './SavedMovies.css';
 
-import { MOVIES } from '../../utils/constants'
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import { withRouter } from 'react-router-dom'
 
 
 
-function SaviedMovies({
-    loggedIn
-}) {
-    let location = useLocation();
+function SaviedMovies(props) {
+    const [searchData, setSearchData] = React.useState('')
+    const [checkBoxChecked, setCheckBoxChecked] = React.useState(false)
+    const [filteredMovies, setFilteredMovies] = React.useState([])
+    const filteredFoundMovies = searchMovieFilter(props.userMovies, searchData)
+    const filteredFoundMoviesWithDuration = movieDurationFilter(filteredFoundMovies, checkBoxChecked)
 
-    const savedMoviesArray = MOVIES.filter(function(e) {
-        return e.isSaved === true
-    })
+    function searchMovieFilter(movies, keyword) {
+        return movies.filter((movie) => movie.nameRU.toLowerCase().includes(keyword.toLowerCase()))
+    }
+
+    function movieDurationFilter(movies, checked) {
+        return movies.filter((movie) => checked ? movie.duration <= 40 : movie.duration >= 40)
+    }
+
+    function handleSearchData(keyword) {
+        setSearchData(keyword)
+    }
+
+    function handleCheckBoxChange() {
+        setCheckBoxChecked(!checkBoxChecked)
+    }
+
+    React.useEffect(() => {
+        setFilteredMovies(filteredFoundMoviesWithDuration)
+    }, [props.userMovies, searchData, checkBoxChecked])
 
     return (
         <>
-            <Header loggedIn={loggedIn} />
-            <SearchForm />
-            <MoviesCardList
-                cardData={savedMoviesArray}
-                pageLocation={location.pathname}
+            <Header
+                loggedIn={props.loggedIn}
             />
-            <ShowMoreMoviesButton />
+            <SearchForm
+                onSearchSubmit={handleSearchData}
+                onCheckBoxChecked={checkBoxChecked}
+                onCheckBoxChange={handleCheckBoxChange}
+            />
+            { props.loading
+                ? <Preloader />
+                : <MoviesCardList
+                    movies={filteredMovies}
+                    savedMovies={true}
+                    onToggleMovie={props.onToggleMovie}
+                />
+            }
             <Footer />
         </>
     )

@@ -47,6 +47,7 @@
     font-size: 14px;
     line-height: 18px;
     color: #fff;
+    cursor: pointer;
 }
 
 .search-form__submit_disabled {
@@ -66,6 +67,17 @@
     color: #fff;
 }
 
+.search-form__span-error {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+    color: #000;
+    text-align: center;
+}
+
+
 @media screen and (max-width: 999px) {
     .search-form {
         margin: 70px 30px 62px 30px;
@@ -76,17 +88,20 @@
     .search-form {
         margin: 70px 14px 75px 14px;
     }
-    .search-form__input{
+
+    .search-form__input {
         max-height: 56px;
         font-size: 16px;
         line-height: 16px;
     }
+
     .search-form__submit {
         top: 6px;
         right: 6px;
         width: 80px;
         height: 44px;
     }
+
     .search-form__submit_disabled {
         top: 6px;
         right: 6px;
