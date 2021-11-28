@@ -2,10 +2,13 @@ import React from 'react';
 import './NotFoundError.css';
 import { useHistory } from 'react-router-dom';
 
-function NotFoundError() {
+function NotFoundError(loggedIn) {
 
     const history = useHistory();
     const goBack = () => {
+        if (!loggedIn) {
+            history.go(-1)
+        }
         history.go(-2)
     }
 

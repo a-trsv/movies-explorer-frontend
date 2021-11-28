@@ -375,7 +375,9 @@ function App() {
           </Route>
 
           <Route path="*">
-            <NotFoundError />
+            <NotFoundError
+              loggedIn={loggedIn}
+               />
           </Route>
 
         </Switch>
