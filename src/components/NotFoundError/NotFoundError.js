@@ -7,7 +7,7 @@ function NotFoundError(loggedIn) {
     const history = useHistory();
     const goBack = () => {
         if (!loggedIn) {
-            history.go(-1)
+            history.goBack()
         }
         history.go(-2)
     }
