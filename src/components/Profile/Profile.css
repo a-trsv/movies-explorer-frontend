@@ -31,6 +31,7 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+    max-width: 410px;
     padding-bottom: 16px;
     margin-bottom: 17px;
     border-bottom: 1px solid rgb(232, 232, 232);
@@ -48,6 +49,28 @@
     border-bottom: none;
 }
 
+.profile__input {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    color: #000;
+    text-align: right;
+    padding: 0;
+    border: none;
+    width: 100%
+}
+
+.profile__input:focus {
+    outline: none;
+    border-bottom: 1px solid rgb(52, 86, 243);
+}
+
+.profile__input_error {
+    color: #3456f3;
+}
+
 .profile__name {
     margin-right: 148px;
     padding: 0;
@@ -59,10 +82,22 @@
 }
 
 .profile__edit-zone {
+    max-width: 410px;
+    width: 100%;
     margin-top: 220px;
     display: flex;
     flex-direction: column;
     padding: 0;
+}
+
+.profile__edit-error {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    color: #ff004c;
+    text-align: center;
 }
 
 .profile__button {
@@ -75,25 +110,49 @@
     font-size: 13px;
     line-height: 16px;
     color: #000;
+    text-align: center;
 }
 
-.profile__button_signout {
+.profile__button_active {
+    background-color: #3456f3;
+    border-radius: 3px;
+    width: 100%;
+    max-width: 410px;
+    border: none;
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #fff;
+    height: 45px;
+    cursor: pointer;
+}
+
+.profile__exit-button_active {
     margin-bottom: 0;
     font-weight: 500;
     color: #ee3465;
     text-decoration: none;
 }
 
+.profile__exit-button {
+    display: none;
+}
+
 @media screen and (max-width: 768px) {
     .profile {
         padding-bottom: 270px;
     }
+
     .profile__title {
         margin-top: 236px;
     }
+
     .profile__info {
         margin-top: 96px;
     }
+
     .profile__edit-zone {
         margin-top: 210px;
     }
@@ -103,12 +162,15 @@
     .profile {
         padding-bottom: 40px;
     }
+
     .profile__title {
         margin-top: 70px;
     }
+
     .profile__info {
         margin-top: 80px;
     }
+
     .profile__button {
         font-size: 12px;
         line-height: 15px;

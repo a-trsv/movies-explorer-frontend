@@ -113,16 +113,22 @@
     .header {
         margin: auto 30px auto 30px;
     }
+
+    .header__nav {
+        display: none;
+    }
+
     .header__nav_hamburger {
         display: none;
     }
+
     .header__hamburger-btn {
         display: block;
     }
 }
 
 @media screen and (max-width: 320px) {
-    .header{
+    .header {
         margin: 18px 14px 18px 14px;
     }
 }

@@ -68,6 +68,7 @@
     .portfolio {
         margin-bottom: 90px;
     }
+
     .portfolio__type {
         font-size: 28px;
         line-height: 50px;
@@ -78,13 +79,16 @@
     .portfolio {
         margin-bottom: 70px;
     }
+
     .portfolio__title {
         font-size: 14px;
         line-height: 20px;
     }
+
     .portfolio__projects {
         margin-top: 40px;
     }
+
     .portfolio__type {
         font-size: 18px;
         line-height: 26px;

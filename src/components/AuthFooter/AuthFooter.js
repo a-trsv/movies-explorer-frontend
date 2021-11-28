@@ -13,7 +13,7 @@ function AuthFooter() {
                 {phraseName}
                 <Link className="auth-footer__link" to={linkURL}>
                     {buttonName}
-                    </Link>
+                </Link>
             </span>
         </div>
     )

@@ -1,4 +1,5 @@
 .navigation {
+    display: flex;
 }
 
 .navigation__list {

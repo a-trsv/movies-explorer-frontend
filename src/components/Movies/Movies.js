@@ -1,31 +1,53 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
-import ShowMoreMoviesButton from '../ShowMoreMoviesButton/ShowMoreMoviesButton';
 
 import './Movies.css';
 
-import { MOVIES } from '../../utils/constants'
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+import { withRouter } from 'react-router-dom'
 
 
 
-function Movies() {
-    let location = useLocation();
+function Movies({
+    loggedIn,
+    handleGetAllMovies,
+    loading,
+    handleToggleMovie,
+    movieSearchError,
+    //
+    handleSearchData,
+    checkBoxChecked,
+    handleCheckBoxChange,
+    filteredMovies
+}) {
 
     return (
         <>
-            <SearchForm />
-            {/* <Preloader /> */}
-            <MoviesCardList
-                cardData={MOVIES}
-                pageLocation={location.pathname}
+            <Header
+                loggedIn={loggedIn}
             />
-            <ShowMoreMoviesButton />
+            <SearchForm
+                handleGetAllMovies={handleGetAllMovies}
+                handleSearchData={handleSearchData}
+                checkBoxChecked={checkBoxChecked}
+                handleCheckBoxChange={handleCheckBoxChange}
+            />
+            { loading
+                ? <Preloader />
+                : <MoviesCardList
+                    filteredMovies={filteredMovies}
+                    savedMovies={false}
+                    handleToggleMovie={handleToggleMovie}
+                    movieSearchError={movieSearchError}
+                />
+            }
+            <Footer />
         </>
     )
 }
 
-export default Movies;
+export default withRouter(Movies);

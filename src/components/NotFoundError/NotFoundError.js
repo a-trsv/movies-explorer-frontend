@@ -2,15 +2,21 @@ import React from 'react';
 import './NotFoundError.css';
 import { useHistory } from 'react-router-dom';
 
-function NotFoundError() {
+function NotFoundError(loggedIn) {
 
     const history = useHistory();
+    const goBack = () => {
+        if (!loggedIn) {
+            history.goBack()
+        }
+        history.go(-2)
+    }
 
     return (
         <section className="not-found-error">
             <h1 className="not-found-error__title">404</h1>
             <p className="not-found-error__span">Страница не найдена</p>
-            <p className="not-found-error__return" onClick={() => history.goBack()}>Назад</p>
+            <p className="not-found-error__return" onClick={goBack}>Назад</p>
         </section>
     )
 }
