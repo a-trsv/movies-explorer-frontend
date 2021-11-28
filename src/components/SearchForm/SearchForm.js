@@ -2,7 +2,11 @@ import React from 'react'
 import FilterCheckBox from '../FilterCheckBox/FilterCheckBox'
 import './SearchForm.css'
 
-function SearchForm(props) {
+function SearchForm({
+    handleSearchData,
+    checkBoxChecked,
+    handleCheckBoxChange
+}) {
     const [searchData, setSearchData] = React.useState('')
     const [searchDataError, setSearchDataError] = React.useState('Нужно ввести ключевое слово')
     const [formIsValid, setFormIsValid] = React.useState(false)
@@ -18,7 +22,7 @@ function SearchForm(props) {
 
     function handleSubmit(evt) {
         evt.preventDefault()
-        props.onSearchSubmit(searchData)
+        handleSearchData(searchData)
         setSearchData('')
     }
 
@@ -57,8 +61,8 @@ function SearchForm(props) {
                 </div>
                 {searchDataError && <p id="search-form-span-error" className="search-form__span-error">{searchDataError}</p>}
                 <FilterCheckBox
-                    onCheckBoxChecked={props.onCheckBoxChecked}
-                    onCheckBoxChange={props.onCheckBoxChange}
+                    checkBoxChecked={checkBoxChecked}
+                    handleCheckBoxChange={handleCheckBoxChange}
                 />
             </form>
         </section>

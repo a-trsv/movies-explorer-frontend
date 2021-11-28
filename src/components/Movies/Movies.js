@@ -12,60 +12,37 @@ import { withRouter } from 'react-router-dom'
 
 
 
-function Movies(props) {
-    const [searchData, setSearchData] = React.useState('')
-    const [checkBoxChecked, setCheckBoxChecked] = React.useState(false)
-    const [filteredMovies, setFilteredMovies] = React.useState([])
-    const getLocalMovies = JSON.parse(localStorage.getItem('movies'))
-
-    const filteredFoundMovies = searchMovieFilter(props.movies, searchData)
-
-
-    const filteredFoundMoviesWithDuration = movieDurationFilter(filteredFoundMovies, checkBoxChecked)
-
-    function searchMovieFilter(movies, keyword) {
-        return movies.filter((movie) => movie.nameRU.toLowerCase().includes(keyword.toLowerCase()))
-    }
-
-    function movieDurationFilter(movies, checked) {
-        return movies.filter((movie) => (checked ? movie.duration <= 40 : movie.duration >= 40))
-    }
-
-    function handleSearchData(keyword) {
-        // console.log(keyword)
-        setSearchData(keyword)
-        if (!getLocalMovies) {
-            props.onGetMovies()
-        }
-    }
-
-    function handleCheckBoxChange() {
-        setCheckBoxChecked(!checkBoxChecked)
-    }
-
-    React.useEffect(() => {
-        setFilteredMovies(filteredFoundMoviesWithDuration)
-    }, [props.movies, searchData, checkBoxChecked])
-
+function Movies({
+    loggedIn,
+    handleGetAllMovies,
+    loading,
+    handleToggleMovie,
+    movieSearchError,
+    //
+    handleSearchData,
+    checkBoxChecked,
+    handleCheckBoxChange,
+    filteredMovies
+}) {
 
     return (
         <>
             <Header
-                loggedIn={props.loggedIn}
+                loggedIn={loggedIn}
             />
             <SearchForm
-                onGetMovies={props.onGetMovies}
-                onSearchSubmit={handleSearchData}
-                onCheckBoxChecked={checkBoxChecked}
-                onCheckBoxChange={handleCheckBoxChange}
+                handleGetAllMovies={handleGetAllMovies}
+                handleSearchData={handleSearchData}
+                checkBoxChecked={checkBoxChecked}
+                handleCheckBoxChange={handleCheckBoxChange}
             />
-            { props.loading
+            { loading
                 ? <Preloader />
                 : <MoviesCardList
-                    movies={filteredMovies}
+                    filteredMovies={filteredMovies}
                     savedMovies={false}
-                    onToggleMovie={props.onToggleMovie}
-                    movieSearchError={props.movieSearchError}
+                    handleToggleMovie={handleToggleMovie}
+                    movieSearchError={movieSearchError}
                 />
             }
             <Footer />

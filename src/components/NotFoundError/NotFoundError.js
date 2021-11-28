@@ -5,12 +5,15 @@ import { useHistory } from 'react-router-dom';
 function NotFoundError() {
 
     const history = useHistory();
+    const goBack = () => {
+        history.goBack()
+    }
 
     return (
         <section className="not-found-error">
             <h1 className="not-found-error__title">404</h1>
             <p className="not-found-error__span">Страница не найдена</p>
-            <p className="not-found-error__return" onClick={() => history.goBack()}>Назад</p>
+            <p className="not-found-error__return" onClick={goBack}>Назад</p>
         </section>
     )
 }

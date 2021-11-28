@@ -114,6 +114,10 @@
         margin: auto 30px auto 30px;
     }
 
+    .header__nav {
+        display: none;
+    }
+
     .header__nav_hamburger {
         display: none;
     }

@@ -1,15 +1,11 @@
 import React, { useCallback } from 'react';
 import Form from '../Form/Form';
 import { useHistory, withRouter } from 'react-router-dom'
-import { LOGIN_PAGE_ERRORS, ANOTHER_ERRORS } from '../../utils/errors';
 
-
-
-function Login({ onLogin, loggedIn, loginErrorStatus, tokenErrorStatus }) {
+function Login({ onLogin, loggedIn, profileStatus }) {
 
     const history = useHistory()
     const [formIsValid, setFormIsValid] = React.useState(false)
-    const [loginErrorText, setLoginErrorText] = React.useState(null)
     const [errors, setErrors] = React.useState({})
 
     const [values, setValues] = React.useState({
@@ -46,35 +42,7 @@ function Login({ onLogin, loggedIn, loginErrorStatus, tokenErrorStatus }) {
         evt.preventDefault();
         // console.log(values)
         onLogin(values)
-        getErrorSpan()
         resetForm()
-    }
-
-    function getErrorSpan() {
-        if (loginErrorStatus) {
-            switch (loginErrorStatus) {
-                case '400':
-                    setLoginErrorText(LOGIN_PAGE_ERRORS.WRONG_USER_INFO)
-                    break;
-                case '401':
-                    setLoginErrorText(LOGIN_PAGE_ERRORS.WRONG_TOKEN_REQUEST)
-                    break;
-                case '500':
-                    setLoginErrorText(ANOTHER_ERRORS.SERVER_ERROR)
-                    break;
-                default:
-                    break;
-            }
-        }
-        if (tokenErrorStatus) {
-            switch (tokenErrorStatus) {
-                case '409':
-                    setLoginErrorText(LOGIN_PAGE_ERRORS.WRONG_TOKEN_COMPARE)
-                    break;
-                default:
-                    break;
-            }
-        }
     }
 
     return (
@@ -96,6 +64,8 @@ function Login({ onLogin, loggedIn, loginErrorStatus, tokenErrorStatus }) {
                 name='email'
                 value={values.email || ''}
                 onChange={handleChange}
+                // добавляем проверку на корректность домена почты + возможность доменов нескольких уровней, например login@domain.com.ru
+                pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"
                 required
             />
             <span className="form__error" id="inputEmail-error">{errors.email}</span>
@@ -115,7 +85,7 @@ function Login({ onLogin, loggedIn, loginErrorStatus, tokenErrorStatus }) {
                 required
             />
             <span className="form__error" id="inputPassword-error">{errors.password}</span>
-            <p className="form__span_error">{loginErrorText}</p>
+            <p className="form__span_error">{profileStatus}</p>
 
         </Form>
     )

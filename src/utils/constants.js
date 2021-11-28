@@ -16,5 +16,11 @@ const hamburgerMenuItems = [
     },
 ]
 
+const MOVIE_DURATION = {
+    SHORT_FILM_TIMELINE: '40'
+}
 
-export default hamburgerMenuItems
+export {
+    hamburgerMenuItems,
+    MOVIE_DURATION
+}

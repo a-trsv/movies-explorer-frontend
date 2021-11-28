@@ -2,11 +2,9 @@ import React, { useCallback } from 'react';
 import { useHistory, withRouter } from 'react-router-dom'
 // import { currentUser } from '../../utils/constants';
 import Form from '../Form/Form';
-import { REGISTER_PAGE_ERRORS, ANOTHER_ERRORS } from '../../utils/errors';
 
-function Register({ onRegister, loggedIn, regErrorStatus }) {
+function Register({ onRegister, loggedIn, profileStatus }) {
 
-    const [regErrorText, setRegErrorText] = React.useState(null)
     const [formIsValid, setFormIsValid] = React.useState(false)
     const [errors, setErrors] = React.useState({})
 
@@ -46,25 +44,10 @@ function Register({ onRegister, loggedIn, regErrorStatus }) {
         // console.log(values)
         onRegister(values)
         setFormIsValid(false)
-        setRegErrorText(null)
         resetForm()
     }
 
-    React.useEffect(() => {
-        switch (regErrorStatus) {
-            case '400':
-                setRegErrorText(REGISTER_PAGE_ERRORS.USER_REGISTER_ERROR)
-                break;
-            case '409':
-                setRegErrorText(REGISTER_PAGE_ERRORS.USER_EXIST_ERROR)
-                break;
-            case '500':
-                setRegErrorText(ANOTHER_ERRORS.SERVER_ERROR)
-                break;
-            default:
-                break;
-        }
-    }, [regErrorStatus])
+
 
     return (
         <Form
@@ -104,6 +87,8 @@ function Register({ onRegister, loggedIn, regErrorStatus }) {
                 name='email'
                 value={values.email || ''}
                 onChange={handleChange}
+                // добавляем проверку на корректность домена почты + возможность доменов нескольких уровней, например login@domain.com.ru
+                pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"
                 required
             />
             <span className="form__error" id="inputEmail-error">{errors.email}</span>
@@ -125,7 +110,7 @@ function Register({ onRegister, loggedIn, regErrorStatus }) {
                 required
             />
             <span className="form__error" id="inputEmail-error">{errors.password}</span>
-            <p className="form__span_error">{regErrorText}</p>
+            <p className="form__span_error">{profileStatus}</p>
         </Form>
     )
 }

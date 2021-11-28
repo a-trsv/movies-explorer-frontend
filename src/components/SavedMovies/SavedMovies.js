@@ -2,12 +2,13 @@ import React from 'react';
 
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import Preloader from '../Preloader/Preloader';
 import './SavedMovies.css';
-
+import Preloader from '../Preloader/Preloader'
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import { withRouter } from 'react-router-dom'
+import { MOVIE_DURATION } from '../../utils/constants'
+
 
 
 
@@ -23,7 +24,7 @@ function SaviedMovies(props) {
     }
 
     function movieDurationFilter(movies, checked) {
-        return movies.filter((movie) => checked ? movie.duration <= 40 : movie.duration >= 40)
+        return movies.filter((movie) => checked ? movie.duration <= MOVIE_DURATION.SHORT_FILM_TIMELINE : movie.duration >= MOVIE_DURATION.SHORT_FILM_TIMELINE)
     }
 
     function handleSearchData(keyword) {
@@ -44,16 +45,17 @@ function SaviedMovies(props) {
                 loggedIn={props.loggedIn}
             />
             <SearchForm
-                onSearchSubmit={handleSearchData}
-                onCheckBoxChecked={checkBoxChecked}
-                onCheckBoxChange={handleCheckBoxChange}
+                handleSearchData={handleSearchData}
+                checkBoxChecked={checkBoxChecked}
+                handleCheckBoxChange={handleCheckBoxChange}
             />
             { props.loading
                 ? <Preloader />
-                : <MoviesCardList
-                    movies={filteredMovies}
+                :
+                <MoviesCardList
+                    filteredMovies={filteredMovies}
                     savedMovies={true}
-                    onToggleMovie={props.onToggleMovie}
+                    handleToggleMovie={props.onToggleMovie}
                 />
             }
             <Footer />

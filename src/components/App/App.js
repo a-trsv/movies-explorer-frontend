@@ -15,6 +15,12 @@ import { CurrentUserContext } from '../../components/CurrentUserContext/CurrentU
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import mainApi from '../../utils/MainApi';
 import moviesApi from '../../utils/MoviesApi';
+// добавляем константы успешных ответов от сервера для передачи пользователю
+import { PROFILE } from '../../utils/success-message'
+// добавляем константы неуспешных ответов от сервера для передачи пользователю
+import { LOGIN_PAGE_ERRORS, PROFILE_PAGE_ERRORS, REGISTER_PAGE_ERRORS, ANOTHER_ERRORS } from '../../utils/errors';
+import { MOVIE_DURATION } from '../../utils/constants'
+// console.log(MOVIE_DURATION.SHORT_FILM_TIMELINE)
 
 
 function App() {
@@ -28,11 +34,9 @@ function App() {
   const [loading, setLoading] = React.useState(false)
   const [movieSearchError, setMovieSearchError] = React.useState('')
 
-  // error for profile, login & register
-  const [profileEditErrorStatus, setProfileEditErrorStatus] = React.useState(null)
-  const [regErrorStatus, setRegErrorStatus] = React.useState(null)
-  const [loginErrorStatus, setLoginErrorStatus] = React.useState(null)
-  const [tokenErrorStatus, setTokenErrorStatus] = React.useState(null)
+  // error&success state for profile, login & register
+  const [profileStatus, setProfileStatus] = React.useState(null)
+
   const location = useLocation()
 
   function handleLogin({ email, password }) {
@@ -48,7 +52,18 @@ function App() {
       })
       .catch((err) => {
         console.log(err)
-        setLoginErrorStatus(err)
+        if (err === '400') {
+          console.log('400')
+          showProfileStatus(LOGIN_PAGE_ERRORS.WRONG_USER_INFO)
+        }
+        if (err === '401') {
+          console.log('401')
+          showProfileStatus(LOGIN_PAGE_ERRORS.WRONG_TOKEN_REQUEST)
+        }
+        if (err === '500') {
+          console.log('500')
+          showProfileStatus(ANOTHER_ERRORS.SERVER_ERROR)
+        }
       })
   }
 
@@ -67,7 +82,10 @@ function App() {
         })
         .catch((err) => {
           console.log(err)
-          setTokenErrorStatus(err)
+          if (err === '409') {
+            console.log('409')
+            showProfileStatus(LOGIN_PAGE_ERRORS.WRONG_TOKEN_COMPARE)
+          }
         })
     }
   }
@@ -89,7 +107,18 @@ function App() {
       })
       .catch((err) => {
         console.log(err)
-        setRegErrorStatus(err)
+        if (err === '400') {
+          console.log('400')
+          showProfileStatus(REGISTER_PAGE_ERRORS.USER_REGISTER_ERROR)
+        }
+        if (err === '409') {
+          console.log('409')
+          showProfileStatus(REGISTER_PAGE_ERRORS.USER_EXIST_ERROR)
+        }
+        if (err === '500') {
+          console.log('500')
+          showProfileStatus(ANOTHER_ERRORS.SERVER_ERROR)
+        }
       })
   }
 
@@ -99,11 +128,32 @@ function App() {
     mainApi.updateProfile(data, token)
       .then((res) => {
         setCurrentUser(res)
+        // Передаем успешный ответ пользователю
+        showProfileStatus(PROFILE.SUCCESS_STATUS)
       })
       .catch((err) => {
-        console.log(err)
-        setProfileEditErrorStatus(err)
+        // console.log(err)
+        if (err === '400') {
+          console.log('400')
+          showProfileStatus(PROFILE_PAGE_ERRORS.PROFILE_EDIT_ERROR)
+        }
+        if (err === '409') {
+          console.log('409')
+          showProfileStatus(PROFILE_PAGE_ERRORS.PROFILE_EXIST_ERROR)
+
+        }
+        if (err === '500') {
+          console.log('500')
+          showProfileStatus(ANOTHER_ERRORS.SERVER_ERROR)
+        }
       })
+  }
+
+  // Загружаем сообщение, если получен успешный ответ от сервера, затем скрываем ответ через setTimeout
+  function showProfileStatus(status) {
+    setProfileStatus(status)
+    // console.log(status)
+    setTimeout(() => setProfileStatus(null), 3500)
   }
 
   // movies
@@ -113,29 +163,31 @@ function App() {
     setMovieSearchError('')
     const localMovies = JSON.parse(localStorage.getItem('movies'))
     if (localMovies) {
-      setLoading(false)
+      setTimeout(() => setLoading(false), 500)
       setMovies(matchedMovies(localMovies, userMovies))
     } else {
       moviesApi.getMoviesContent()
         .then((res) => {
           // console.log(res)
-          setLoading(false)
           localStorage.setItem('movies', JSON.stringify(res))
+          setTimeout(() => setLoading(false), 500)
           setMovies(matchedMovies(res, userMovies))
           setMovieSearchError('Ничего не найдено')
         })
         .catch((err) => {
           setMovieSearchError('Ошибочка')
-          setLoading(false)
+          setTimeout(() => setLoading(false), 500)
           console.log(err)
         })
     }
   }
 
   function handleAddFilm(movie) {
+    setLoading(true)
     mainApi.addFilm(movie)
       .then((newUserMovie) => {
-        console.log(newUserMovie)
+        // console.log(newUserMovie)
+        setTimeout(() => setLoading(false), 500)
         setUserMovies([newUserMovie, ...userMovies])
       })
       .catch((err) => {
@@ -148,11 +200,13 @@ function App() {
       userMovie.movieId === (movie.id || movie.movieId || movie._id)
     )
     const isOwn = userMovie.owner._id === currentUser._id
+    setLoading(true)
     mainApi.deleteFilm(userMovie._id, isOwn)
       .then(() => {
         const newUserMovies = userMovies.filter((userMovie) =>
           userMovie.movieId !== (movie.id || movie.movieId || movie._id)
         )
+        setTimeout(() => setLoading(false), 500)
         setUserMovies(newUserMovies)
       })
       .catch((err) => {
@@ -186,30 +240,73 @@ function App() {
       setLoading(true)
       Promise.all([mainApi.getUserData(), mainApi.getUserMovies()])
         .then(([userData, userMovies]) => {
-          setLoading(false)
           setCurrentUser(userData.data)
           // console.log(userData)
           // console.log(userData.data)
+          setTimeout(() => setLoading(false), 500)
           setUserMovies(userMovies)
         })
         .catch(() => {
-          setLoading(false)
+          setTimeout(() => setLoading(false), 500)
           setMovieSearchError('Ничего не найдено')
         })
     }
   }, [loggedIn])
 
   React.useEffect(() => {
+    setLoading(true)
     const localMovies = JSON.parse(localStorage.getItem('movies'))
     // console.log(localMovies)
     if (localMovies) {
+      setTimeout(() => setLoading(false), 500)
       setMovies(matchedMovies(localMovies, userMovies))
       setMovieSearchError('Ничего не найдено')
     } else {
+      setTimeout(() => setLoading(false), 500)
       setMovies([])
       setMovieSearchError('Начните поиск')
     }
   }, [userMovies])
+
+
+
+
+  //movies.js
+
+  const [searchData, setSearchData] = React.useState('')
+  const [checkBoxChecked, setCheckBoxChecked] = React.useState(false)
+  const [filteredMovies, setFilteredMovies] = React.useState([])
+  const getLocalMovies = JSON.parse(localStorage.getItem('movies'))
+
+  const filteredFoundMovies = searchMovieFilter(movies, searchData)
+  const filteredFoundMoviesWithDuration = movieDurationFilter(filteredFoundMovies, checkBoxChecked)
+
+  function searchMovieFilter(movies, keyword) {
+    return movies.filter((movie) => movie.nameRU.toLowerCase().includes(keyword.toLowerCase()))
+  }
+
+  function movieDurationFilter(movies, checked) {
+    return movies.filter((movie) => (checked ? movie.duration <= MOVIE_DURATION.SHORT_FILM_TIMELINE : movie.duration >= MOVIE_DURATION.SHORT_FILM_TIMELINE))
+  }
+
+  function handleSearchData(keyword) {
+    // console.log(keyword)
+
+    setSearchData(keyword)
+    if (!getLocalMovies) {
+      handleGetAllMovies()
+    }
+  }
+
+  function handleCheckBoxChange() {
+    setCheckBoxChecked(!checkBoxChecked)
+  }
+
+  React.useEffect(() => {
+    setLoading(true)
+    setTimeout(() => setLoading(false), 500)
+    setFilteredMovies(filteredFoundMoviesWithDuration)
+  }, [movies, searchData, checkBoxChecked])
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -230,9 +327,12 @@ function App() {
             redirectAddress='/'
             component={Movies}
             onGetMovies={handleGetAllMovies}
-            movies={movies}
+            filteredMovies={filteredMovies}
+            handleSearchData={handleSearchData}
+            checkBoxChecked={checkBoxChecked}
+            handleCheckBoxChange={handleCheckBoxChange}
             loading={loading}
-            onToggleMovie={handleToggleMovie}
+            handleToggleMovie={handleToggleMovie}
             movieSearchError={movieSearchError}
           />
 
@@ -251,9 +351,9 @@ function App() {
             loggedIn={loggedIn}
             onSignOut={handleSignOut}
             onUpdateProfile={handleUpdateProfile}
-            profileEditErrorStatus={profileEditErrorStatus}
             redirectAddress='/'
             component={Profile}
+            profileStatus={profileStatus}
           />
 
           <Route exact path='/signup'>
@@ -261,7 +361,7 @@ function App() {
             <Register
               loggedIn={loggedIn}
               onRegister={handleRegister}
-              regErrorStatus={regErrorStatus}
+              profileStatus={profileStatus}
             />
           </Route>
 
@@ -270,8 +370,7 @@ function App() {
             <Login
               loggedIn={loggedIn}
               onLogin={handleLogin}
-              loginErrorStatus={loginErrorStatus}
-              tokenErrorStatus={tokenErrorStatus}
+              profileStatus={profileStatus}
             />
           </Route>
 

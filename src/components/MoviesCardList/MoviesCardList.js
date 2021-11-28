@@ -4,7 +4,12 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
 
 
-function MoviesCardList(props) {
+function MoviesCardList({
+    filteredMovies,
+    handleToggleMovie,
+    movieSearchError,
+    savedMovies
+}) {
 
 
     // 1280px -> 12 cards x 3 row (3+3+3+3), showMoreMovies + 3
@@ -51,22 +56,22 @@ function MoviesCardList(props) {
     return (
         <>
             <ul className="movies-card-list">
-                {props.movies.length > 0 && props.movies.slice(0, defaultCards).map((movie, i) => (
+                {filteredMovies.length > 0 && filteredMovies.slice(0, defaultCards).map((filteredMovie, i) => (
                     <MoviesCard
-                        movie={movie}
+                        filteredMovie={filteredMovie}
                         key={i}
-                        savedMovies={props.savedMovies}
-                        onToggleMovie={props.onToggleMovie}
+                        savedMovies={savedMovies}
+                        handleToggleMovie={handleToggleMovie}
                     />
                 ))}
             </ul>
 
-            { props.savedMovies ? props.movies.length < 1 && <p className="movies-card-list__error-span">Нет добавленных фильмов</p> : props.movies.length < 1 && <p className="movies-card-list__error-span">{props.movieSearchError}</p>}
+            { savedMovies ? filteredMovies.length < 1 && <p className="movies-card-list__error-span">Нет добавленных фильмов</p> : filteredMovies.length < 1 && <p className="movies-card-list__error-span">{movieSearchError}</p>}
             <div className="movies-card-list__show-more">
                 {
-                    props.savedMovies
+                    savedMovies
                         ? ''
-                        : (props.movies.length > 0) && (props.movies.length > defaultCards) ? <button onClick={showMoreMovies} className="movies-card-list__show-button">Ещё</button> : ''
+                        : (filteredMovies.length > 0) && (filteredMovies.length > defaultCards) ? <button onClick={showMoreMovies} className="movies-card-list__show-button">Ещё</button> : ''
                 }
             </div>
         </>

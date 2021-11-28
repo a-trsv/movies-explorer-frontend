@@ -4,14 +4,15 @@ import { Link } from 'react-router-dom';
 import Header from '../Header/Header';
 import { withRouter } from 'react-router-dom'
 import { CurrentUserContext } from '../../components/CurrentUserContext/CurrentUserContext'
-import { PROFILE_PAGE_ERRORS, ANOTHER_ERRORS } from '../../utils/errors';
+// import { PROFILE_PAGE_ERRORS, ANOTHER_ERRORS } from '../../utils/errors';
+
 
 
 function Profile({
     loggedIn,
     onSignOut,
     onUpdateProfile,
-    profileEditErrorStatus
+    profileStatus
 }) {
 
     const currentUser = React.useContext(CurrentUserContext)
@@ -25,8 +26,6 @@ function Profile({
     const profileSaveButtonText = `${!formIsValid ? 'Редактировать' : 'Сохранить'}`
     const profileSignOutButtonType = `${!formIsValid ? 'profile__exit-button_active' : 'profile__exit-button'}`
 
-    const [profileErrorText, setProfileErrorText] = React.useState(null)
-
     React.useEffect(() => {
         setValues({
             name: currentUser.name || '',
@@ -38,7 +37,21 @@ function Profile({
         evt.preventDefault();
         onUpdateProfile(values)
         setFormIsValid(false)
-        setProfileErrorText(null)
+        // setProfileErrorText(null)
+    }
+
+    // Добавляем проверку на изменение данных в инпутах, если новое значение = старому, то деактивируем кнопку сабмита
+    function getChangeValues() {
+        if (
+            values.name === currentUser.name && values.email === currentUser.email
+        ) {
+            setFormIsValid(false)
+            // console.log('net izemenenii')
+        } else {
+            setFormIsValid(true)
+            // console.log('est izemenenija')
+
+        }
     }
 
     function handleChange(evt) {
@@ -51,21 +64,8 @@ function Profile({
 
 
     React.useEffect(() => {
-        switch (profileEditErrorStatus) {
-            case '400':
-                setProfileErrorText(PROFILE_PAGE_ERRORS.PROFILE_EDIT_ERROR)
-                break;
-            case '409':
-                setProfileErrorText(PROFILE_PAGE_ERRORS.PROFILE_EXIST_ERROR)
-                break;
-            case '500':
-                setProfileErrorText(ANOTHER_ERRORS.SERVER_ERROR)
-                break;
-            default:
-                break;
-        }
-    }, [profileEditErrorStatus])
-
+        getChangeValues()
+    }, [handleChange])
 
     return (
         <>
@@ -107,7 +107,8 @@ function Profile({
                     </div>
                 </div>
                 <div className="profile__edit-zone">
-                    <p className="profile__edit-error">{profileErrorText}</p>
+                    <p className="profile__edit-error">{profileStatus}</p>
+
                     <button disabled={!formIsValid} className={`profile__button ${profileSaveButtonType}`} form="profile-edit" type="submit">
                         {profileSaveButtonText}
                     </button>
