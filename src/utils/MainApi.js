@@ -133,8 +133,8 @@ class MainApi {
 }
 const mainApi = new MainApi({
     // address: 'https://api.a-trsv.nomoredomains.club',
-    // address: 'https://api-a-trsv-movies.nomoredomains.work',
-    address: 'http://localhost:3000',
+    address: 'https://api-a-trsv-movies.nomoredomains.work',
+    // address: 'http://localhost:3000',
     headers: {
         // 'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
         'Accept': 'application/json',
