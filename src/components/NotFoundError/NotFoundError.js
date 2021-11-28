@@ -6,7 +6,7 @@ function NotFoundError() {
 
     const history = useHistory();
     const goBack = () => {
-        history.goBack()
+        history.go(-2)
     }
 
     return (
